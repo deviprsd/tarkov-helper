@@ -38,14 +38,14 @@ public class TarkovHelper implements ActionListener {
 		panel.setLayout(null);
 
 		JLabel lblCaliber = new JLabel("Caliber");
-		lblCaliber.setBounds(7, 12, 33, 14);
+		lblCaliber.setBounds(7, 12, 72, 14);
 		panel.add(lblCaliber);
 
-		String[] ammoTypes = { "12x70", "20x70", ".366", "4.6x30", "5.45x39", "5.56x45", "7.62x25tt", "7.62x39",
+		String[] ammoTypes = { "12x70", "20x70", ".366 TKM", "4.6x30", "5.45x39", "5.56x45", "7.62x25tt", "7.62x39",
 				"7.62x51", "7.62x54R", "9x18pm", "9x19", "9x21", "9x39" };
 
 		JComboBox comboBox = new JComboBox(ammoTypes);
-		comboBox.setBounds(52, 9, 87, 20);
+		comboBox.setBounds(89, 9, 87, 20);
 		panel.add(comboBox);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -67,12 +67,12 @@ public class TarkovHelper implements ActionListener {
 		tabbedPane.addTab("Credits", null, panel_2, null);
 
 		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(150, 7, 90, 23);
+		btnSearch.setBounds(186, 8, 90, 23);
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				for (int i = 0; i < 14; i++) {
-					for(int j = 0; j < 13; j++) {
+				for (int i = 0; i < rowData.length; i++) {
+					for (int j = 0; j < rowData[i].length; j++) {
 						rowData[i][j] = null;
 					}
 				}
@@ -87,6 +87,7 @@ public class TarkovHelper implements ActionListener {
 		btnCompare.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				System.out.println(table.getSelectedRow());
 			}
 		});
 		panel.add(btnCompare);
@@ -116,7 +117,6 @@ public class TarkovHelper implements ActionListener {
 				}
 			}
 		}
-		
 	}
 
 	/**
@@ -135,11 +135,13 @@ public class TarkovHelper implements ActionListener {
 					if (!values[0].equals(prevCaliber)) {
 						idx1++;
 						idx2 = 0;
+						prevCaliber = values[0];
 						chartData.add(new LinkedList<Ammo>());
 					}
 					if (prevCaliber.equals("")) {
 						prevCaliber = values[0];
 					}
+					System.out.println(prevCaliber);
 					int[] temp = { Integer.parseInt(values[6]), Integer.parseInt(values[7]),
 							Integer.parseInt(values[8]), Integer.parseInt(values[9]), Integer.parseInt(values[10]),
 							Integer.parseInt(values[11]) };
