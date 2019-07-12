@@ -27,7 +27,7 @@ public class TarkovHelper implements ActionListener {
 		mainWindow.setTitle("Tarkov Helper");
 		mainWindow.setVisible(true);
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainWindow.setLocation(screenSize.width - 450, screenSize.height - 500);
+		mainWindow.setLocation(screenSize.width - 1341, screenSize.height - 600);
 		mainWindow.setSize(1341, 541);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -38,7 +38,7 @@ public class TarkovHelper implements ActionListener {
 		panel.setLayout(null);
 
 		JLabel lblCaliber = new JLabel("Caliber");
-		lblCaliber.setBounds(7, 12, 72, 14);
+		lblCaliber.setBounds(10, 12, 69, 14);
 		panel.add(lblCaliber);
 
 		String[] ammoTypes = { "12x70", "20x70", ".366 TKM", "4.6x30", "5.45x39", "5.56x45", "7.62x25tt", "7.62x39",
@@ -49,14 +49,15 @@ public class TarkovHelper implements ActionListener {
 		panel.add(comboBox);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(7, 34, 1303, 431);
+		scrollPane.setBounds(41, 34, 1269, 431);
 		panel.add(scrollPane);
 
 		Object columnNames[] = { "Caliber", "Name", "Damage", "Penetration Value", "Armour Damage %",
 				"Fragmentation Chance", "Vs Class 1", "Vs Class 2", "Vs Class 3", "Vs Class 4", "Vs Class 5",
-				"Vs Class 6", "Most Effective Against" };
-		Object rowData[][] = new Object[14][13];
+				"Vs Class 6"/*, "Most Effective Against" */};
+		Object rowData[][] = new Object[14][12];
 		table = new JTable(rowData, columnNames);
+		table.setBorder(UIManager.getBorder("CheckBox.border"));
 
 		scrollPane.setViewportView(table);
 
@@ -91,6 +92,18 @@ public class TarkovHelper implements ActionListener {
 			}
 		});
 		panel.add(btnCompare);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("");
+		chckbxNewCheckBox.setBounds(10, 54, 21, 23);
+		panel.add(chckbxNewCheckBox);
+		
+		JCheckBox checkBox = new JCheckBox("");
+		checkBox.setBounds(10, 72, 21, 23);
+		panel.add(checkBox);
+		
+		JCheckBox checkBox_1 = new JCheckBox("");
+		checkBox_1.setBounds(10, 89, 21, 23);
+		panel.add(checkBox_1);
 
 	}
 
@@ -112,7 +125,7 @@ public class TarkovHelper implements ActionListener {
 					r[idx][9] = a.getEffectiveness()[3];
 					r[idx][10] = a.getEffectiveness()[4];
 					r[idx][11] = a.getEffectiveness()[5];
-					r[idx][12] = a.getHighestArmourPen();
+					//r[idx][12] = a.getHighestArmourPen();
 					idx++;
 				}
 			}
