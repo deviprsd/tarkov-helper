@@ -2,7 +2,7 @@
  * @author Maxx Persin
  *
  */
-public class Ammo {
+public class Ammo implements Comparable {
 
     private String roundType;
     private String name;
@@ -10,7 +10,6 @@ public class Ammo {
     private int penetration;
     private int fragmentationChance;
     private int armourDamage;
-    private int highestArmourLevelCanPen;
     private int[] effectiveness;
 
     public Ammo(String rT, String n, int d, int pen, int f, int a, int[] e) {
@@ -22,15 +21,6 @@ public class Ammo {
         armourDamage = a;
         effectiveness = e;
         int temp = 0;
-        highestArmourLevelCanPen = 1;
-        if (effectiveness[0] != 0) {
-            for (int i = 0; i < effectiveness.length; i++) {
-                if (effectiveness[i] >= temp && effectiveness[i] > 3) {
-                    temp = effectiveness[i];
-                    highestArmourLevelCanPen = i + 1;
-                }
-            }
-        }
     }
 
     public String getRoundType() {
@@ -57,16 +47,19 @@ public class Ammo {
         return armourDamage;
     }
 
-    public int getHighestArmourPen() {
-        return highestArmourLevelCanPen;
-    }
 
     public int[] getEffectiveness() {
         return effectiveness;
     }
 
     public String toString() {
-        return roundType + " " + name + " " + damage + " " + penetration + " " + fragmentationChance + " " + armourDamage + " " + highestArmourLevelCanPen;
+        return roundType + " " + name + " " + damage + " " + penetration + " " + fragmentationChance + " " + armourDamage;
     }
+
+	@Override
+	public int compareTo(Object arg0) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

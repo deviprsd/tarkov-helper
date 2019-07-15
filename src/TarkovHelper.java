@@ -5,8 +5,6 @@ import java.io.*;
 import java.util.LinkedList;
 import java.util.Properties;
 
-// import net.miginfocom.swing.MigLayout;
-
 /**
  * @author Maxx Persin
  *
@@ -21,9 +19,6 @@ public class TarkovHelper implements ActionListener {
      *
      */
     public TarkovHelper() {
-        Properties props = System.getProperties();
-        props.setProperty("javax.accessibility.assistive_technologies", "");
-
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         JFrame mainWindow = new JFrame();
         mainWindow.setTitle("Tarkov Helper");
@@ -31,6 +26,7 @@ public class TarkovHelper implements ActionListener {
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainWindow.setLocation(screenSize.width - 450, screenSize.height - 500);
         mainWindow.setSize(1341, 541);
+        mainWindow.setLocationRelativeTo(null);
 
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         mainWindow.getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -56,14 +52,31 @@ public class TarkovHelper implements ActionListener {
 
         Object columnNames[] = { "Caliber", "Name", "Damage", "Penetration Value", "Armour Damage %",
                 "Fragmentation Chance", "Vs Class 1", "Vs Class 2", "Vs Class 3", "Vs Class 4", "Vs Class 5",
-                "Vs Class 6", "Most Effective Against" };
-        Object rowData[][] = new Object[14][13];
+                "Vs Class 6"};
+        Object rowData[][] = new Object[14][columnNames.length];
         table = new JTable(rowData, columnNames);
 
         scrollPane.setViewportView(table);
 
-        JPanel panel_1 = new JPanel();
-        tabbedPane.addTab("Maps", null, panel_1, null);
+        JPanel mapsPane = new JPanel();
+        tabbedPane.addTab("Maps", null, mapsPane, null);
+        mapsPane.setLayout(null);
+        
+        JLabel lblMapSelector = new JLabel("Map Selector");
+        lblMapSelector.setBounds(20, 14, 87, 14);
+        mapsPane.add(lblMapSelector);
+        
+        JComboBox mapComboBox = new JComboBox(new Object[]{});
+        mapComboBox.setBounds(129, 11, 87, 20);
+        mapsPane.add(mapComboBox);
+        
+        JButton btnSelect = new JButton("Select");
+        btnSelect.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        	}
+        });
+        btnSelect.setBounds(226, 10, 90, 23);
+        mapsPane.add(btnSelect);
 
         JPanel panel_2 = new JPanel();
         tabbedPane.addTab("Credits", null, panel_2, null);
@@ -89,7 +102,8 @@ public class TarkovHelper implements ActionListener {
         btnCompare.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent arg0) {
-                System.out.println(table.getSelectedRow());
+            	//for (int i = 0; i < )
+                System.out.println(table.getSelectedRows());
             }
         });
         panel.add(btnCompare);
@@ -114,7 +128,6 @@ public class TarkovHelper implements ActionListener {
                     r[idx][9] = a.getEffectiveness()[3];
                     r[idx][10] = a.getEffectiveness()[4];
                     r[idx][11] = a.getEffectiveness()[5];
-                    r[idx][12] = a.getHighestArmourPen();
                     idx++;
                 }
             }
@@ -150,11 +163,7 @@ public class TarkovHelper implements ActionListener {
                     Ammo a = new Ammo(values[0], values[1], Integer.parseInt(values[2]), Integer.parseInt(values[3]),
                             Integer.parseInt(values[4]),
                             Integer.parseInt(values[5].substring(0, values[5].length() - 1)), temp);
-                    // chartData.add((ArrayList<String>) Arrays.asList(values));
-                    // System.out.println(Arrays.asList(values));
-                    // chartData.System.out.println(a.toString());
                     chartData.getLast().add(a);
-                    // System.out.println(chartData.getLast().getLast());
                     idx2++;
                 }
             }
@@ -163,11 +172,7 @@ public class TarkovHelper implements ActionListener {
             JOptionPane.showMessageDialog(null, "Error reading ammo chart file");
             System.exit(-1);
         }
-//		for(int i = 0; i < chartData.size(); i++) {
-//			for(int j = 0; j < chartData.get(i).size(); j++) {
-//				System.out.println(chartData.get(i).get(j).toString());
-//			}
-//		}
+
         TarkovHelper t = new TarkovHelper();
 
     }
