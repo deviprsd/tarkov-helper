@@ -11,7 +11,7 @@ import java.util.Properties;
  */
 public class TarkovHelper implements ActionListener {
 
-    // Disregard all of row 1 and all of column 2 when parsing csv file
+    // Disregard all of row 1 when parsing csv file
     public static LinkedList<LinkedList<Ammo>> chartData = new LinkedList<>();
     private JTable table;
 
@@ -139,7 +139,7 @@ public class TarkovHelper implements ActionListener {
      */
     public static void main(String[] args) {
         try {
-            File csvFile = new File("tarkov_ammo_chart.csv");
+            File csvFile = new File("./chart/tarkov_ammo_chart.csv");
             BufferedReader csvReader = new BufferedReader(new FileReader(csvFile));
             int idx1 = 0, idx2 = 0;
             String line;
@@ -169,7 +169,8 @@ public class TarkovHelper implements ActionListener {
             }
         } catch (Exception e) {
             System.out.println(e);
-            JOptionPane.showMessageDialog(null, "Error reading ammo chart file");
+            JOptionPane.showMessageDialog(null, e);
+            System.out.println(e);
             System.exit(-1);
         }
 
