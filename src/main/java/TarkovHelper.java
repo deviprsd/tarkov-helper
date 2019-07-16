@@ -1,9 +1,7 @@
-import res.Ammo;
-import res.Logger;
-import ui.AmmoPanel;
+import res.*;
+import ui.*;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 import java.util.LinkedList;
@@ -13,7 +11,7 @@ import java.util.Objects;
  * @author Maxx Persin
  *
  */
-public class TarkovHelper implements ActionListener {
+public class TarkovHelper {
 
     // Disregard all of row 1 and all of column 2 when parsing csv file
 
@@ -39,33 +37,9 @@ public class TarkovHelper implements ActionListener {
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         mainWindow.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
-        // res.Ammo Panel
         tabbedPane.addTab("Ammo", null, new AmmoPanel(chartData), null);
-
-        // Maps Panel
-        JPanel mapsPane = new JPanel();
-        tabbedPane.addTab("Maps", null, mapsPane, null);
-
-        JLabel lblMapSelector = new JLabel("Map Selector");
-        lblMapSelector.setBounds(20, 14, 87, 14);
-
-        JComboBox mapComboBox = new JComboBox(new Object[]{});
-        mapComboBox.setBounds(129, 11, 87, 20);
-
-        mapsPane.setLayout(null);
-        mapsPane.add(lblMapSelector);
-        mapsPane.add(mapComboBox);
-
-        JButton btnSelect = new JButton("Select");
-        btnSelect.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-            }
-        });
-        btnSelect.setBounds(226, 10, 90, 23);
-        mapsPane.add(btnSelect);
-
-        JPanel panel_2 = new JPanel();
-        tabbedPane.addTab("Credits", null, panel_2, null);
+        tabbedPane.addTab("Maps", null, new MapPanel(), null);
+        tabbedPane.addTab("Credits", null, new CreditPanel(), null);
     }
 
     private void readCSV() {
@@ -122,10 +96,5 @@ public class TarkovHelper implements ActionListener {
      */
     public static void main(String[] args) {
         new TarkovHelper();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent arg0) {
-
     }
 }

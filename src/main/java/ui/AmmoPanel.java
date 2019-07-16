@@ -40,10 +40,10 @@ public class AmmoPanel extends JPanel implements ActionListener {
         rowData = new Object[14][columnNames.length];
         table = new JTable(rowData, columnNames);
 
-        setupCustomUI();
+        setupUI();
     }
 
-    private void setupCustomUI() {
+    private void setupUI() {
         JLabel lblCaliber = new JLabel("Caliber");
         lblCaliber.setBounds(7, 12, 72, 14);
 
