@@ -1,4 +1,4 @@
-import res.Logger;
+import util.Logger;
 import ui.AmmoPanel;
 import ui.CreditPanel;
 import ui.MapPanel;
@@ -16,7 +16,7 @@ public class TarkovHelper {
      *
      */
     public TarkovHelper() {
-        Logger.setLogLevel(Logger.OFF);
+        Logger.setLogLevel(Logger.ALL);
         drawUI();
     }
 

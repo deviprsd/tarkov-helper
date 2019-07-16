@@ -12,7 +12,7 @@ package ui;
 import beans.Ammo;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.apache.commons.collections4.MultiValuedMap;
-import res.Logger;
+import util.Logger;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -34,7 +34,7 @@ public class AmmoPanel extends JPanel implements ActionListener {
     private HashMap<String, LinkedList<Ammo>> chartData;
 
     private JButton btnSearch, btnCompare;
-    private JComboBox<String> comboBox;
+    private JComboBox<String> ammoComboBox;
 
     public AmmoPanel() {
         super();
@@ -53,7 +53,6 @@ public class AmmoPanel extends JPanel implements ActionListener {
 
     private void readAmmoCSV() {
         try {
-
             List<Ammo> ammos = new CsvToBeanBuilder<Ammo>(new FileReader(new File(
                     Objects.requireNonNull(getClass().getClassLoader().getResource("tarkov_ammo_chart.csv")).getFile()
             ))).withType(Ammo.class).build().parse();
@@ -75,8 +74,8 @@ public class AmmoPanel extends JPanel implements ActionListener {
         JLabel lblCaliber = new JLabel("Caliber");
         lblCaliber.setBounds(7, 12, 72, 14);
 
-        comboBox = new JComboBox<>(ammoTypes);
-        comboBox.setBounds(89, 9, 87, 20);
+        ammoComboBox = new JComboBox<>(ammoTypes);
+        ammoComboBox.setBounds(89, 9, 87, 20);
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBounds(7, 34, 1303, 431);
@@ -92,7 +91,7 @@ public class AmmoPanel extends JPanel implements ActionListener {
 
         this.setLayout(null);
         this.add(lblCaliber);
-        this.add(comboBox);
+        this.add(ammoComboBox);
         this.add(scrollPane);
         this.add(btnSearch);
         this.add(btnCompare);
@@ -138,7 +137,7 @@ public class AmmoPanel extends JPanel implements ActionListener {
                 rowData[i][j] = null;
             }
         }
-        updateTable(rowData, comboBox.getSelectedItem());
+        updateTable(rowData, Objects.requireNonNull(ammoComboBox.getSelectedItem()));
         table.updateUI();
     }
 

@@ -1,4 +1,4 @@
-package res;
+package util;
 
 import java.io.PrintStream;
 
@@ -21,6 +21,10 @@ public class Logger {
     private static void log(Object msg, int level, PrintStream out) {
         if(level != OFF && level <= logLevel) {
             out.println(msg);
+
+            if(msg instanceof Throwable) {
+                ((Throwable) msg).printStackTrace();
+            }
         }
     }
 
