@@ -1,4 +1,4 @@
-Ammo Type,,Damage,Pen Value,Armor Damage %,Frag. Chance*,Class 1,Class 2,Class 3,Class 4,Class 5,Class 6
+Caliber,Round,Damage,Pen Value,Armor Damage %,Frag. Chance*,Class 1,Class 2,Class 3,Class 4,Class 5,Class 6
 12x70,buckshot,32,3,26,0%,4,3,3,3,3,3
 12x70,RIP,235,0,0,100%,0,0,0,0,0,0
 12x70,slug,165,21,65,100%,6,6,4,3,1,0
