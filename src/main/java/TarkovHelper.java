@@ -54,7 +54,7 @@ public class TarkovHelper {
             while ((line = csvReader.readLine()) != null) {
                 String[] values = line.split(",");
 
-                if (!values[0].equals("Ammo Type")) {
+                if (!values[0].equalsIgnoreCase("Caliber")) {
                     if (!values[0].equals(prevCaliber)) {
                         idx1++;
                         idx2 = 0;
@@ -85,6 +85,7 @@ public class TarkovHelper {
                 }
             }
         } catch (Exception e) {
+            Logger.setLogLevel(Logger.ALL);
             Logger.err(e);
             JOptionPane.showMessageDialog(null, "Error reading ammo chart file");
             System.exit(-1);
