@@ -1,3 +1,4 @@
+# Tarkov Helper
 Java and the Java Development Kit (JDK) must be installed to run this project
 
 Java can be installed at https://www.java.com/en/download/
