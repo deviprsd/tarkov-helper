@@ -9,10 +9,17 @@
 
 package ui;
 
+import beans.Ammo;
+import com.opencsv.bean.CsvToBeanBuilder;
+import org.apache.commons.collections4.MultiValuedMap;
+import res.Logger;
+
 import javax.swing.*;
-import java.awt.event.*;
-import java.util.LinkedList;
-import res.Ammo;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileReader;
+import java.util.*;
 
 public class AmmoPanel extends JPanel implements ActionListener {
     private final Object[] columnNames = {
@@ -21,26 +28,47 @@ public class AmmoPanel extends JPanel implements ActionListener {
             "Vs Class 6"
     };
 
-    private String[] ammoTypes = {
-            "12x70", "20x70", ".366 TKM", "4.6x30", "5.45x39", "5.56x45", "7.62x25tt", "7.62x39",
-            "7.62x51", "7.62x54R", "9x18pm", "9x19", "9x21", "9x39"
-    };
-
+    private String[] ammoTypes;
     private Object[][] rowData;
     private JTable table;
-    private LinkedList<LinkedList<Ammo>> chartData;
+    private HashMap<String, LinkedList<Ammo>> chartData;
 
     private JButton btnSearch, btnCompare;
     private JComboBox<String> comboBox;
 
-    public AmmoPanel(LinkedList<LinkedList<Ammo>> data) {
+    public AmmoPanel() {
         super();
 
-        chartData = data;
+        chartData = new HashMap<>();
+        readAmmoCSV();
+
+        Set<String> dynamicAmmoTypes = chartData.keySet();
+        ammoTypes = chartData.keySet().toArray(new String[dynamicAmmoTypes.size()]);
+
         rowData = new Object[14][columnNames.length];
         table = new JTable(rowData, columnNames);
 
         setupUI();
+    }
+
+    private void readAmmoCSV() {
+        try {
+
+            List<Ammo> ammos = new CsvToBeanBuilder<Ammo>(new FileReader(new File(
+                    Objects.requireNonNull(getClass().getClassLoader().getResource("tarkov_ammo_chart.csv")).getFile()
+            ))).withType(Ammo.class).build().parse();
+
+            for (Ammo ammo : ammos) {
+                if(!chartData.containsKey(ammo.getCaliber())) {
+                    chartData.put(ammo.getCaliber(), new LinkedList<>());
+                }
+                chartData.get(ammo.getCaliber()).add(ammo);
+            }
+        } catch (Exception e) {
+            Logger.err(e);
+            JOptionPane.showMessageDialog(null, "Error reading ammo chart file");
+            System.exit(-1);
+        }
     }
 
     private void setupUI() {
@@ -71,25 +99,25 @@ public class AmmoPanel extends JPanel implements ActionListener {
     }
 
     private void updateTable(Object[][] r, Object item) {
-        for (int i = 0, idx = 0; i < chartData.size(); i++) {
-            for (int j = 0; j < chartData.get(i).size(); j++) {
-                if (chartData.get(i).get(j).getRoundType().equals(item.toString())) {
-                    Ammo a = chartData.get(i).get(j);
-                    r[idx][0] = a.getRoundType();
-                    r[idx][1] = a.getName();
-                    r[idx][2] = a.getDamage();
-                    r[idx][3] = a.getPenetration();
-                    r[idx][4] = a.getArmourDamage();
-                    r[idx][5] = a.getFragmentationChance();
-                    r[idx][6] = a.getEffectiveness()[0];
-                    r[idx][7] = a.getEffectiveness()[1];
-                    r[idx][8] = a.getEffectiveness()[2];
-                    r[idx][9] = a.getEffectiveness()[3];
-                    r[idx][10] = a.getEffectiveness()[4];
-                    r[idx][11] = a.getEffectiveness()[5];
-                    idx++;
-                }
-            }
+        LinkedList<Ammo> ammos = chartData.get(item.toString());
+        MultiValuedMap<String, Integer> effectiveness;
+
+        for(int idx = 0; idx < ammos.size(); idx++) {
+            Ammo a = ammos.get(idx);
+            r[idx][0] = a.getCaliber();
+            r[idx][1] = a.getName();
+            r[idx][2] = a.getDamage();
+            r[idx][3] = a.getPenetration();
+            r[idx][4] = (int)a.getArmourDamage() + "%";
+            r[idx][5] = a.getFragmentationChance();
+
+            effectiveness = a.getEffectiveness();
+            r[idx][6] = effectiveness.get("Class 1").toArray()[0];
+            r[idx][7] = effectiveness.get("Class 2").toArray()[0];
+            r[idx][8] = effectiveness.get("Class 3").toArray()[0];
+            r[idx][9] = effectiveness.get("Class 4").toArray()[0];
+            r[idx][10] = effectiveness.get("Class 5").toArray()[0];
+            r[idx][11] = effectiveness.get("Class 6").toArray()[0];
         }
     }
 
