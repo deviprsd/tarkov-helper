@@ -1,9 +1,9 @@
 Name,File
-Customs,maps/customs_map.png
-Factory,maps/factory_map.png
-Interchange,maps/interchange_map.jpg
-Labs (Basement),maps/labs_basement_map.png
-Labs (Level 1),maps/labs_lvl_1_map.png
-Labs (Level 2),maps/labs_lvl_2_map.png
-Shoreline,maps/shoreline_map.jpg
-Woods,maps/woods_map.jpg
+Customs,./src/main/resources/maps/customs_map.png
+Factory,./src/main/resources/maps/factory_map.png
+Interchange,./src/main/resources/maps/interchange_map.jpg
+Labs (Basement),./src/main/resources/maps/labs_basement_map.png
+Labs (Level 1),./src/main/resources/maps/labs_lvl_1_map.png
+Labs (Level 2),./src/main/resources/maps/labs_lvl_2_map.png
+Shoreline,./src/main/resources/maps/shoreline_map.jpg
+Woods,./src/main/resources/maps/woods_map.jpg

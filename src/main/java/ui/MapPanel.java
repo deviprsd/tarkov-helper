@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.util.*;
+import java.awt.Image;
 
 public class MapPanel extends JPanel implements ActionListener {
     private HashMap<String, Map> chartData;
@@ -17,6 +18,7 @@ public class MapPanel extends JPanel implements ActionListener {
 
     private JButton btnSelect;
     private JComboBox<String> mapComboBox;
+    private JLabel mapLabel;
 
     public MapPanel() {
         super();
@@ -33,15 +35,15 @@ public class MapPanel extends JPanel implements ActionListener {
     private void readMapCSV() {
         try {
             List<Map> maps = new CsvToBeanBuilder<Map>(new FileReader(new File(
-                    Objects.requireNonNull(getClass().getClassLoader().getResource("tarkov_map_chart.csv")).getFile()
-            ))).withType(Map.class).build().parse();
+                    Objects.requireNonNull(getClass().getClassLoader().getResource("tarkov_map_chart.csv")).getFile())))
+                            .withType(Map.class).build().parse();
 
             for (Map map : maps) {
                 chartData.put(map.getName(), map);
             }
         } catch (Exception e) {
             Logger.err(e);
-            JOptionPane.showMessageDialog(null, "Error reading map chart file");
+            JOptionPane.showMessageDialog(null, "Error reading map files");
             System.exit(-1);
         }
     }
@@ -57,16 +59,35 @@ public class MapPanel extends JPanel implements ActionListener {
         btnSelect.setBounds(226, 10, 90, 23);
         btnSelect.addActionListener(this);
 
+        ImageIcon currentMap = new ImageIcon();
+        mapLabel = new JLabel(currentMap);
+        mapLabel.setLocation(200, 200);
+
         this.setLayout(null);
         this.add(lblMapSelector);
         this.add(mapComboBox);
         this.add(btnSelect);
+        this.add(mapLabel);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnSelect) {
-
+        if (e.getSource() == btnSelect) {
+            displaySelectedMap();
         }
+    }
+
+    private void displaySelectedMap() {
+        ImageIcon currentMap = new ImageIcon(chartData.get(mapComboBox.getSelectedItem()).getFile());
+        mapLabel.setIcon(currentMap);
+        System.out.println(mapLabel.getIcon().toString());
+        mapLabel.setHorizontalAlignment(JLabel.CENTER);
+        mapLabel.setVerticalAlignment(JLabel.CENTER);
+        
+        // mapLabel.setIcon(new
+        // ImageIcon(chartData.get(mapComboBox.getSelectedItem()).getFile()));
+        System.out.println(chartData.get(mapComboBox.getSelectedItem()).getFile());
+       
+        this.repaint();
     }
 }
