@@ -19,6 +19,7 @@ public class MapPanel extends JPanel implements ActionListener {
     private JButton btnSelect;
     private JComboBox<String> mapComboBox;
     private JLabel mapLabel;
+    private JScrollPane mapScrollPane;
 
     public MapPanel() {
         super();
@@ -61,13 +62,15 @@ public class MapPanel extends JPanel implements ActionListener {
 
         ImageIcon currentMap = new ImageIcon();
         mapLabel = new JLabel(currentMap);
-        mapLabel.setLocation(200, 200);
+        //mapLabel.setSize(200, 200);
+        //mapLabel.setLocation(116, 65);
+        mapScrollPane = new JScrollPane(mapLabel);
 
         this.setLayout(null);
         this.add(lblMapSelector);
         this.add(mapComboBox);
         this.add(btnSelect);
-        this.add(mapLabel);
+        this.add(mapScrollPane);
     }
 
     @Override
@@ -81,6 +84,10 @@ public class MapPanel extends JPanel implements ActionListener {
         ImageIcon currentMap = new ImageIcon(chartData.get(mapComboBox.getSelectedItem()).getFile());
         mapLabel.setIcon(currentMap);
         System.out.println(mapLabel.getIcon().toString());
+        
+        mapLabel.setSize(currentMap.getIconWidth(), currentMap.getIconHeight());
+        mapScrollPane.setSize(currentMap.getIconWidth(), currentMap.getIconHeight());
+        mapScrollPane.setLocation((this.getWidth() - currentMap.getIconWidth()) / 2, (this.getHeight() - currentMap.getIconHeight()) / 2);
         mapLabel.setHorizontalAlignment(JLabel.CENTER);
         mapLabel.setVerticalAlignment(JLabel.CENTER);
         

@@ -12,6 +12,8 @@ import java.awt.*;
  */
 public class TarkovHelper {
 
+    public final int windowWidth = 1341;
+    public final int windowHeight = 541;
     /**
      *
      */
@@ -25,7 +27,7 @@ public class TarkovHelper {
         mainWindow.setTitle("Tarkov Helper");
         mainWindow.setVisible(true);
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainWindow.setSize(1341, 541);
+        mainWindow.setSize(windowWidth, windowHeight);
         mainWindow.setLocationRelativeTo(null);
 
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
