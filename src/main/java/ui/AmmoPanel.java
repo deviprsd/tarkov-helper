@@ -11,25 +11,20 @@ package ui;
 
 import beans.Ammo;
 import com.opencsv.bean.CsvToBeanBuilder;
+import models.AmmoModel;
 import org.apache.commons.collections4.MultiValuedMap;
 import util.Logger;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class AmmoPanel extends JPanel implements ActionListener {
-    private final Object[] columnNames = {
-            "Caliber", "Name", "Damage", "Penetration Value", "Armour Damage %",
-            "Fragmentation Chance", "Vs Class 1", "Vs Class 2", "Vs Class 3", "Vs Class 4", "Vs Class 5",
-            "Vs Class 6"
-    };
 
     private String[] ammoTypes;
-    private Object[][] rowData;
+
     private JTable table;
     private HashMap<String, LinkedList<Ammo>> chartData;
 
@@ -45,17 +40,17 @@ public class AmmoPanel extends JPanel implements ActionListener {
         Set<String> dynamicAmmoTypes = chartData.keySet();
         ammoTypes = chartData.keySet().toArray(new String[dynamicAmmoTypes.size()]);
 
-        rowData = new Object[14][columnNames.length];
-        table = new JTable(rowData, columnNames);
+        table = new JTable(new AmmoModel());
+        //table.setAutoCreateRowSorter(true);
 
         setupUI();
     }
 
     private void readAmmoCSV() {
         try {
-            List<Ammo> ammos = new CsvToBeanBuilder<Ammo>(new FileReader(new File(
-                    Objects.requireNonNull(getClass().getClassLoader().getResource("tarkov_ammo_chart.csv")).getFile()
-            ))).withType(Ammo.class).build().parse();
+            List<Ammo> ammos = new CsvToBeanBuilder<Ammo>(new InputStreamReader(
+                    Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("tarkov_ammo_chart.csv"))
+            )).withType(Ammo.class).build().parse();
 
             for (Ammo ammo : ammos) {
                 if(!chartData.containsKey(ammo.getCaliber())) {
@@ -75,6 +70,7 @@ public class AmmoPanel extends JPanel implements ActionListener {
         lblCaliber.setBounds(7, 12, 72, 14);
 
         ammoComboBox = new JComboBox<>(ammoTypes);
+        ammoComboBox.setEditable(false);
         ammoComboBox.setBounds(89, 9, 87, 20);
 
         JScrollPane scrollPane = new JScrollPane();
@@ -97,26 +93,30 @@ public class AmmoPanel extends JPanel implements ActionListener {
         this.add(btnCompare);
     }
 
-    private void updateTable(Object[][] r, Object item) {
+    private void updateTable(Object item) {
         LinkedList<Ammo> ammos = chartData.get(item.toString());
         MultiValuedMap<String, Integer> effectiveness;
+        AmmoModel ammoModel = (AmmoModel) table.getModel();
 
-        for(int idx = 0; idx < ammos.size(); idx++) {
-            Ammo a = ammos.get(idx);
-            r[idx][0] = a.getCaliber();
-            r[idx][1] = a.getName();
-            r[idx][2] = a.getDamage();
-            r[idx][3] = a.getPenetration();
-            r[idx][4] = (int)a.getArmourDamage() + "%";
-            r[idx][5] = a.getFragmentationChance();
+        for(int idx = 0; idx < ammoModel.getRowCount(); idx++) {
+            if(idx < ammos.size()) {
+                Ammo a = ammos.get(idx);
+                ammoModel.setValueAt(a.getCaliber(), idx, 0);
+                ammoModel.setValueAt(a.getName(), idx, 1);
+                ammoModel.setValueAt(a.getDamage(), idx, 2);
+                ammoModel.setValueAt(a.getPenetration(), idx, 3);
+                ammoModel.setValueAt((int) a.getArmourDamage() + "%", idx, 4);
+                ammoModel.setValueAt(a.getFragmentationChance(), idx, 5);
 
-            effectiveness = a.getEffectiveness();
-            r[idx][6] = effectiveness.get("Class 1").toArray()[0];
-            r[idx][7] = effectiveness.get("Class 2").toArray()[0];
-            r[idx][8] = effectiveness.get("Class 3").toArray()[0];
-            r[idx][9] = effectiveness.get("Class 4").toArray()[0];
-            r[idx][10] = effectiveness.get("Class 5").toArray()[0];
-            r[idx][11] = effectiveness.get("Class 6").toArray()[0];
+                effectiveness = a.getEffectiveness();
+                for (int j = 6; j < 12; j++) {
+                    ammoModel.setValueAt(effectiveness.get("Class " + (j - 5)).toArray()[0], idx, j);
+                }
+            } else {
+                for (int j = 0; j < ammoModel.getColumnCount(); j++) {
+                    ammoModel.setValueAt(null, idx, j);
+                }
+            }
         }
     }
 
@@ -132,13 +132,7 @@ public class AmmoPanel extends JPanel implements ActionListener {
     }
 
     private void onSearchClick() {
-        for (int i = 0; i < rowData.length; i++) {
-            for (int j = 0; j < rowData[i].length; j++) {
-                rowData[i][j] = null;
-            }
-        }
-        updateTable(rowData, Objects.requireNonNull(ammoComboBox.getSelectedItem()));
-        table.updateUI();
+        updateTable(Objects.requireNonNull(ammoComboBox.getSelectedItem()));
     }
 
     private void onCompareClick() {

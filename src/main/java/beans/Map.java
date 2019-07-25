@@ -1,9 +1,13 @@
 package beans;
 
 import com.opencsv.bean.CsvBindByName;
+import com.sun.istack.internal.Nullable;
 import util.Logger;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class Map {
@@ -22,8 +26,12 @@ public class Map {
         this.name = name;
     }
 
-    public File getFileAsFile() {
-        return new File(Objects.requireNonNull(getClass().getClassLoader().getResource(file)).getFile());
+    @Nullable public Image getFileAsImage() {
+        try {
+            return ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(file)));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String getFile() {

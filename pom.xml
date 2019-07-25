@@ -7,6 +7,7 @@
     <groupId>titans.inc.tarkovhelper</groupId>
     <artifactId>tarkov-helper</artifactId>
     <version>0.0.1-alpha</version>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -20,4 +21,32 @@
             <version>4.5</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>TarkovHelper</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

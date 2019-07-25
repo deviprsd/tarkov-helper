@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.awt.Image;
 
@@ -35,9 +36,9 @@ public class MapPanel extends JPanel implements ActionListener {
 
     private void readMapCSV() {
         try {
-            List<Map> maps = new CsvToBeanBuilder<Map>(new FileReader(new File(
-                    Objects.requireNonNull(getClass().getClassLoader().getResource("tarkov_map_chart.csv")).getFile())))
-                            .withType(Map.class).build().parse();
+            List<Map> maps = new CsvToBeanBuilder<Map>(new InputStreamReader(
+                    Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("tarkov_map_chart.csv"))
+            )).withType(Map.class).build().parse();
 
             for (Map map : maps) {
                 chartData.put(map.getName(), map);
@@ -54,6 +55,7 @@ public class MapPanel extends JPanel implements ActionListener {
         lblMapSelector.setBounds(20, 14, 87, 14);
 
         mapComboBox = new JComboBox<>(mapTypes);
+        mapComboBox.setEditable(false);
         mapComboBox.setBounds(129, 11, 87, 20);
 
         btnSelect = new JButton("Select");
@@ -81,7 +83,11 @@ public class MapPanel extends JPanel implements ActionListener {
     }
 
     private void displaySelectedMap() {
-        ImageIcon currentMap = new ImageIcon(chartData.get(mapComboBox.getSelectedItem()).getFile());
+        ImageIcon currentMap = new ImageIcon(
+                Objects.requireNonNull(
+                        chartData.get(mapComboBox.getItemAt(mapComboBox.getSelectedIndex())).getFileAsImage()
+                )
+        );
         mapLabel.setIcon(currentMap);
         System.out.println(mapLabel.getIcon().toString());
         
@@ -93,7 +99,7 @@ public class MapPanel extends JPanel implements ActionListener {
         
         // mapLabel.setIcon(new
         // ImageIcon(chartData.get(mapComboBox.getSelectedItem()).getFile()));
-        System.out.println(chartData.get(mapComboBox.getSelectedItem()).getFile());
+        //System.out.println(chartData.get(mapComboBox.getSelectedItem().toString()).getFile());
        
         this.repaint();
     }
