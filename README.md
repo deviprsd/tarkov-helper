@@ -17,5 +17,8 @@ The JDK can be installed at https://www.oracle.com/technetwork/java/javase/downl
 
 https://github.com/titans-inc/tarkov-helper/releases/tag/v0.0.2-alpha
 
+# Donations
+If you like what we are doing here, feel free to buy us a coffee! [![Buy me a coffee](https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/black_img.png)](https://www.buymeacoffee.com/L0vIjOXPT)
+
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ftitans-inc%2Ftarkov-helper.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Ftitans-inc%2Ftarkov-helper?ref=badge_large)
