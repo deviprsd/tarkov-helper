@@ -6,8 +6,6 @@ import com.opencsv.bean.CsvNumber;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 
-import java.util.Collection;
-
 /**
  * @author Maxx Persin
  *
