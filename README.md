@@ -15,7 +15,7 @@ The JDK can be installed at https://www.oracle.com/technetwork/java/javase/downl
 
 # Download Binary at:
 
-https://github.com/titans-inc/tarkov-helper/releases/tag/v0.0.2-alpha
+https://github.com/titans-inc/tarkov-helper/releases/tag/v0.0.3-alpha
 
 # Donations
 If you like what we are doing here, feel free to buy us a coffee! [![Buy me a coffee](https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg)](https://www.buymeacoffee.com/L0vIjOXPT)
