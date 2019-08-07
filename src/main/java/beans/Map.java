@@ -26,7 +26,7 @@ public class Map {
         this.name = name;
     }
 
-    @Nullable public Image getFileAsImage() {
+    public Image getFileAsImage() {
         try {
             return ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(file)));
         } catch (Exception e) {

@@ -89,18 +89,14 @@ public class MapPanel extends JPanel implements ActionListener {
                 )
         );
         mapLabel.setIcon(currentMap);
-        System.out.println(mapLabel.getIcon().toString());
+        //System.out.println(mapLabel.getIcon().toString());
         
         mapLabel.setSize(currentMap.getIconWidth(), currentMap.getIconHeight());
         mapScrollPane.setSize(currentMap.getIconWidth(), currentMap.getIconHeight());
         mapScrollPane.setLocation((this.getWidth() - currentMap.getIconWidth()) / 2, (this.getHeight() - currentMap.getIconHeight()) / 2);
         mapLabel.setHorizontalAlignment(JLabel.CENTER);
         mapLabel.setVerticalAlignment(JLabel.CENTER);
-        
-        // mapLabel.setIcon(new
-        // ImageIcon(chartData.get(mapComboBox.getSelectedItem()).getFile()));
-        //System.out.println(chartData.get(mapComboBox.getSelectedItem().toString()).getFile());
-       
+
         this.repaint();
     }
 }

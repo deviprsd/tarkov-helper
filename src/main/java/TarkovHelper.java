@@ -12,8 +12,8 @@ import java.awt.*;
  */
 public class TarkovHelper {
 
-    public final int windowWidth = 1341;
-    public final int windowHeight = 541;
+    private int windowWidth;
+    private int windowHeight;
     /**
      *
      */
@@ -27,13 +27,15 @@ public class TarkovHelper {
         mainWindow.setTitle("Tarkov Helper");
         mainWindow.setVisible(true);
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainWindow.setSize(windowWidth, windowHeight);
+        mainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        windowHeight = mainWindow.getHeight();
+        windowWidth = mainWindow.getWidth();
         mainWindow.setLocationRelativeTo(null);
 
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         mainWindow.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
-        tabbedPane.addTab("Ammo", null, new AmmoPanel(), null);
+        tabbedPane.addTab("Ammo", null, new AmmoPanel(windowWidth, windowHeight), null);
         tabbedPane.addTab("Maps", null, new MapPanel(), null);
         tabbedPane.addTab("Credits", null, new CreditPanel(), null);
     }

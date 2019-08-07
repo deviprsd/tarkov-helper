@@ -31,8 +31,14 @@ public class AmmoPanel extends JPanel implements ActionListener {
     private JButton btnSearch, btnCompare;
     private JComboBox<String> ammoComboBox;
 
-    public AmmoPanel() {
+    private int windowWidth;
+    private int windowHeight;
+
+    public AmmoPanel(int windowWidth, int windowHeight) {
         super();
+
+        this.windowWidth = windowWidth;
+        this.windowHeight = windowHeight;
 
         chartData = new HashMap<>();
         readAmmoCSV();
@@ -74,7 +80,7 @@ public class AmmoPanel extends JPanel implements ActionListener {
         ammoComboBox.setBounds(89, 9, 87, 20);
 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(7, 34, 1303, 431);
+        scrollPane.setBounds(7, 34, windowWidth - 50, windowHeight / 2);
         scrollPane.setViewportView(table);
 
         btnSearch = new JButton("Search");
@@ -82,7 +88,7 @@ public class AmmoPanel extends JPanel implements ActionListener {
         btnSearch.addActionListener(this);
 
         btnCompare = new JButton("Compare");
-        btnCompare.setBounds(1208, 8, 102, 23);
+        btnCompare.setBounds(windowWidth - 150, 8, 102, 23);
         btnCompare.addActionListener(this);
 
         this.setLayout(null);
