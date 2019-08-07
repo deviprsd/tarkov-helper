@@ -1,7 +1,7 @@
 package beans;
 
 import com.opencsv.bean.CsvBindByName;
-import com.sun.istack.internal.Nullable;
+//import com.sun.istack.internal.Nullable;
 import util.Logger;
 
 import javax.imageio.ImageIO;

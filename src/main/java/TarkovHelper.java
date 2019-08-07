@@ -36,8 +36,8 @@ public class TarkovHelper {
         mainWindow.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
         tabbedPane.addTab("Ammo", null, new AmmoPanel(windowWidth, windowHeight), null);
-        tabbedPane.addTab("Maps", null, new MapPanel(), null);
-        tabbedPane.addTab("Credits", null, new CreditPanel(), null);
+        tabbedPane.addTab("Maps", null, new MapPanel(windowWidth, windowHeight), null);
+        tabbedPane.addTab("Credits", null, new CreditPanel(windowWidth, windowHeight), null);
     }
 
     /**

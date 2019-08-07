@@ -17,13 +17,19 @@ public class MapPanel extends JPanel implements ActionListener {
     private HashMap<String, Map> chartData;
     private String[] mapTypes;
 
+    private int windowHeight;
+    private int windowWidth;
+
     private JButton btnSelect;
     private JComboBox<String> mapComboBox;
     private JLabel mapLabel;
     private JScrollPane mapScrollPane;
 
-    public MapPanel() {
+    public MapPanel(int windowHeight, int windowWidth) {
         super();
+
+        this.windowHeight = windowHeight;
+        this.windowWidth = windowWidth;
 
         chartData = new HashMap<>();
         readMapCSV();
@@ -37,8 +43,8 @@ public class MapPanel extends JPanel implements ActionListener {
     private void readMapCSV() {
         try {
             List<Map> maps = new CsvToBeanBuilder<Map>(new InputStreamReader(
-                    Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("tarkov_map_chart.csv"))
-            )).withType(Map.class).build().parse();
+                    Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("tarkov_map_chart.csv"))))
+                            .withType(Map.class).build().parse();
 
             for (Map map : maps) {
                 chartData.put(map.getName(), map);
@@ -64,15 +70,17 @@ public class MapPanel extends JPanel implements ActionListener {
 
         ImageIcon currentMap = new ImageIcon();
         mapLabel = new JLabel(currentMap);
-        //mapLabel.setSize(200, 200);
-        //mapLabel.setLocation(116, 65);
+        // mapLabel.setSize(200, 200);
+        // mapLabel.setLocation(116, 65);
         mapScrollPane = new JScrollPane(mapLabel);
+        mapScrollPane.setLocation(50, 50);
 
         this.setLayout(null);
         this.add(lblMapSelector);
         this.add(mapComboBox);
         this.add(btnSelect);
         this.add(mapScrollPane);
+        
     }
 
     @Override
@@ -83,19 +91,19 @@ public class MapPanel extends JPanel implements ActionListener {
     }
 
     private void displaySelectedMap() {
-        ImageIcon currentMap = new ImageIcon(
-                Objects.requireNonNull(
-                        chartData.get(mapComboBox.getItemAt(mapComboBox.getSelectedIndex())).getFileAsImage()
-                )
-        );
+        ImageIcon currentMap = new ImageIcon(Objects
+                .requireNonNull(chartData.get(mapComboBox.getItemAt(mapComboBox.getSelectedIndex())).getFileAsImage()));
         mapLabel.setIcon(currentMap);
-        //System.out.println(mapLabel.getIcon().toString());
+        mapScrollPane.setSize((int)(windowWidth * 1.66), (windowHeight / 2) - 50);
+       // mapScrollPane.setViewport
+        if (currentMap.getIconWidth() >= windowWidth) {
+
+        } else {
+
+        }
         
-        mapLabel.setSize(currentMap.getIconWidth(), currentMap.getIconHeight());
-        mapScrollPane.setSize(currentMap.getIconWidth(), currentMap.getIconHeight());
-        mapScrollPane.setLocation((this.getWidth() - currentMap.getIconWidth()) / 2, (this.getHeight() - currentMap.getIconHeight()) / 2);
-        mapLabel.setHorizontalAlignment(JLabel.CENTER);
-        mapLabel.setVerticalAlignment(JLabel.CENTER);
+        //mapLabel.setHorizontalAlignment(JLabel.CENTER);
+        //mapLabel.setVerticalAlignment(JLabel.CENTER);
 
         this.repaint();
     }
