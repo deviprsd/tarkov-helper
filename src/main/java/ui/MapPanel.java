@@ -70,8 +70,6 @@ public class MapPanel extends JPanel implements ActionListener {
 
         ImageIcon currentMap = new ImageIcon();
         mapLabel = new JLabel(currentMap);
-        // mapLabel.setSize(200, 200);
-        // mapLabel.setLocation(116, 65);
         mapScrollPane = new JScrollPane(mapLabel);
         mapScrollPane.setLocation(50, 50);
 
@@ -80,7 +78,7 @@ public class MapPanel extends JPanel implements ActionListener {
         this.add(mapComboBox);
         this.add(btnSelect);
         this.add(mapScrollPane);
-        
+
     }
 
     @Override
@@ -93,17 +91,9 @@ public class MapPanel extends JPanel implements ActionListener {
     private void displaySelectedMap() {
         ImageIcon currentMap = new ImageIcon(Objects
                 .requireNonNull(chartData.get(mapComboBox.getItemAt(mapComboBox.getSelectedIndex())).getFileAsImage()));
+
         mapLabel.setIcon(currentMap);
-        mapScrollPane.setSize((int)(windowWidth * 1.66), (windowHeight / 2) - 50);
-       // mapScrollPane.setViewport
-        if (currentMap.getIconWidth() >= windowWidth) {
-
-        } else {
-
-        }
-        
-        //mapLabel.setHorizontalAlignment(JLabel.CENTER);
-        //mapLabel.setVerticalAlignment(JLabel.CENTER);
+        mapScrollPane.setSize((int) (windowWidth * 1.66), (windowHeight / 2) - 50);
 
         this.repaint();
     }
